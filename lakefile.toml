@@ -1,0 +1,10 @@
+name = "asympt"
+version = "0.1.0"
+defaultTargets = ["asympt"]
+
+[[lean_lib]]
+name = "Asympt"
+
+[[lean_exe]]
+name = "asympt"
+root = "Main"
