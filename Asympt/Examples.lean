@@ -7,8 +7,8 @@ example : bigO (λn => 5 * n^3 + 100) (λn => n^3) := by
   intro n h
   simp
   calc
-    5 * n ^ 3 + 100 ≤ 5 * n ^ 3 + 1000 := by simp
-    5 * n ^ 3 + 1000 ≤ 5 * n ^ 3 + n ^ 3 := add_le_add le.refl (sorry)
+    5 * n ^ 3 + 100 ≤ 5 * n ^ 3 + 10 ^ 3 := by simp
+    5 * n ^ 3 + 10 ^ 3 ≤ 5 * n ^ 3 + n ^ 3 := add_le_add le.refl (Nat.pow_le_pow_left h 3)
     5 * n ^ 3 + n ^ 3 = 6 * n ^ 3 := (succ_mul 5 (n ^ 3)).symm
 
 example : bigOmega (λn => 5 * n^3 + 100) (λn => n^3) := sorry
