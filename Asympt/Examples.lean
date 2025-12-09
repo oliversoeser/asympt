@@ -2,40 +2,41 @@ import Asympt.Basic
 
 open Nat
 
-example : bigO (λn => 5 * n^3 + 100) (λn => n^3) := by
+example : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
   exists 6, by simp, 10
   intro n h
   calc
-    5 * n ^ 3 + 100 ≤ 5 * n ^ 3 + 10 ^ 3 := by simp
-    5 * n ^ 3 + 10 ^ 3 ≤ 5 * n ^ 3 + n ^ 3 := add_le_add le.refl (Nat.pow_le_pow_left h 3)
-    5 * n ^ 3 + n ^ 3 = 6 * n ^ 3 := (succ_mul 5 (n ^ 3)).symm
+    _ ≤ 5 * n ^ 3 + 10 ^ 3 := by simp
+    _ ≤ 5 * n ^ 3 + n ^ 3 := add_le_add le.refl (Nat.pow_le_pow_left h 3)
+    _ = 6 * n ^ 3 := (succ_mul 5 (n ^ 3)).symm
 
-example : bigOmega (λn => 5 * n^3 + 100) (λn => n^3) := by
+example : bigOmega (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
   exists 5, by simp, 0
   simp
 
-example : bigTheta (λn => 5 * n^3 + 100) (λn => n^3) := by
+example : bigTheta (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
   exists 5, by simp, 6, by simp, 10
   intro n h
   and_intros
   simp
   calc
-    5 * n ^ 3 + 100 ≤ 5 * n ^ 3 + 10 ^ 3 := by simp
-    5 * n ^ 3 + 10 ^ 3 ≤ 5 * n ^ 3 + n ^ 3 := add_le_add le.refl (Nat.pow_le_pow_left h 3)
-    5 * n ^ 3 + n ^ 3 = 6 * n ^ 3 := (succ_mul 5 (n ^ 3)).symm
+    _ ≤ 5 * n ^ 3 + 10 ^ 3 := by simp
+    _ ≤ 5 * n ^ 3 + n ^ 3 := add_le_add le.refl (Nat.pow_le_pow_left h 3)
+    _ = 6 * n ^ 3 := (succ_mul 5 (n ^ 3)).symm
 
-example : bigO (λn => 5 * n^3 + 100) (λn => n^4) := sorry
+example : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 4) := by
+  exists 6, by simp, 10
+  intro n h
+  calc
+    _ ≤ 5 * n ^ 3 + 10 ^ 4 := by simp
+    _ ≤ 5 * n ^ 4 + 10 ^ 4 := add_le_add (Nat.mul_le_mul le.refl (Nat.pow_le_pow_of_le (lt_of_add_left_lt h) (by simp))) le.refl
+    _ ≤ 5 * n ^ 4 + n ^ 4 := add_le_add le.refl (Nat.pow_le_pow_left h 4)
+    _ = 6 * n ^ 4 := (succ_mul 5 (n ^ 4)).symm
 
-example : littleO (λn => 5 * n^3 + 100) (λn => n^4) := sorry
-
-example : bigOmega (λn => 5 * n^3 + 100) (λn => n^2) := sorry
-
-example : littleOmega (λn => 5 * n^3 + 100) (λn => n^2) := sorry
-
-/-
-lg n = o(n^5)
-n^5 = o(2^n)
-lg(4n) = lg n + lg 4 = O(lg n)
-lg(n^4) = 4 lg n = O(lg n)
-(4n)^3 = 64n^3 = Θ(n^3)
--/
+example : bigOmega (λn => 5 * n ^ 3 + 100) (λn => n ^ 2) := by
+  exists 5, by simp, 1
+  intro n h
+  simp
+  calc
+    _ ≤ 5 * n ^ 3 := mul_le_mul_left 5 (Nat.pow_le_pow_right h (by simp))
+    _ ≤ 5 * n ^ 3 + 100 := le_add_right (5 * n ^ 3) 100
