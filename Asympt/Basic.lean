@@ -1,14 +1,14 @@
 def bigO (f g : Nat → Nat) : Prop :=
-  ∃c, ∃n₀, ∀n, n₀ ≤ n → f n ≤ c * g n
+  ∃c > 0, ∃n₀, ∀n ≥ n₀, f n ≤ c * g n
 
 def bigOmega (f g : Nat → Nat) : Prop :=
-  ∃c, ∃n₀, ∀n, n₀ ≤ n → c * g n ≤ f n
+  ∃c > 0, ∃n₀, ∀n ≥ n₀, c * g n ≤ f n
 
 def bigTheta (f g : Nat → Nat) : Prop :=
-  ∃c₁, ∃c₂, ∃n₀, ∀n, n₀ ≤ n → c₁ * g n ≤ f n ∧ f n ≤ c₂ * g n
+  ∃c₁ > 0, ∃c₂ > 0, ∃n₀, ∀n ≥ n₀, c₁ * g n ≤ f n ∧ f n ≤ c₂ * g n
 
 def littleO (f g : Nat → Nat) : Prop :=
-  ∀c, ∃n₀, ∀n, n₀ ≤ n → f n < c * g n
+  ∀c > 0, ∃n₀, ∀n ≥ n₀, f n < c * g n
 
 def littleOmega (f g : Nat → Nat) : Prop :=
-  ∀c, ∃n₀, ∀n, n₀ ≤ n → c * g n < f n
+  ∀c > 0, ∃n₀, ∀n ≥ n₀, c * g n < f n
