@@ -2,6 +2,7 @@ import Asympt.Basic
 
 open Nat
 
+-- From first principles
 example : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
   exists 6, by simp, 10
   intro n h
