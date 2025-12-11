@@ -4,7 +4,7 @@ open Nat
 
 -- From first principles
 example : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
-  exists 6, by simp, 10
+  exists 6, 10
   intro n h
   calc
     _ ≤ 5 * n ^ 3 + 10 ^ 3 := by simp
@@ -12,7 +12,7 @@ example : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
     _ = 6 * n ^ 3 := (succ_mul 5 (n ^ 3)).symm
 
 example : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 4) := by
-  exists 6, by simp, 10
+  exists 6, 10
   intro n h
   calc
     _ ≤ 5 * n ^ 3 + 10 ^ 4 := by simp
