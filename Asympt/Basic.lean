@@ -24,7 +24,23 @@ instance : IsPreorder (Nat → Nat) where
   le_refl := refl
   le_trans := trans
 
+theorem const_add (c : Nat) (f : Nat → Nat) : bigO (c + f) f := by
+  exists c, 0
+  intro n h
+  sorry
+
+-- c * f = O(f)
 theorem const_mul (c : Nat) (f : Nat → Nat) : bigO (c * f) f := by
   exists c, 0
   intro n h
   exact le.refl
+
+-- c = O(1)
+theorem const (c : Nat) : bigO (λ_ => c) (λ_ => 1) := by
+  exists c
+  simp
+
+-- f * g = O(f * g)
+theorem mul (f g : Nat → Nat) : bigO (f * g) (f * g) := by
+  exists 1
+  simp
