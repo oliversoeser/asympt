@@ -6,7 +6,7 @@ open Std
 
 namespace BigO
 
--- Big O defines a preorder
+-- Big O is a preorder
 theorem refl (f : Nat → Nat) : bigO f f := by
   exists 1, 0
   intro n h
