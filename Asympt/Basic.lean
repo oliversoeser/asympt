@@ -1,7 +1,10 @@
 import Asympt.Defs
 import Asympt.Notation
+import Asympt.APos
 
 open Nat Std
+
+-- Big O defines a preorder
 
 theorem refl (f : Nat → Nat) : bigO f f := by
   exists 1, 0
@@ -24,10 +27,12 @@ instance : IsPreorder (Nat → Nat) where
   le_refl := refl
   le_trans := trans
 
-theorem const_add (c : Nat) (f : Nat → Nat) : bigO (c + f) f := by
-  exists c, 0
-  intro n h
-  sorry
+-- Basic equations
+
+-- c = O(1)
+theorem const (c : Nat) : bigO (λ_ => c) (λ_ => 1) := by
+  exists c
+  simp
 
 -- c * f = O(f)
 theorem const_mul (c : Nat) (f : Nat → Nat) : bigO (c * f) f := by
@@ -35,12 +40,14 @@ theorem const_mul (c : Nat) (f : Nat → Nat) : bigO (c * f) f := by
   intro n h
   exact le.refl
 
--- c = O(1)
-theorem const (c : Nat) : bigO (λ_ => c) (λ_ => 1) := by
-  exists c
-  simp
+-- Equations for asymptotically positive functions
 
--- f * g = O(f * g)
-theorem mul (f g : Nat → Nat) : bigO (f * g) (f * g) := by
-  exists 1
-  simp
+-- c + f = O(f)
+theorem const_add (c : Nat) (f : Nat → Nat) [h : APos f] : bigO (c + f) f := by
+  let ⟨n₀, h'⟩ := h.apos
+  exists c + 1, n₀
+  intro n hn
+  have pos : 1 ≤ f n := h' n hn
+  have a : c + f n ≤ c * f n + f n := Nat.add_le_add_right (Nat.le_mul_of_pos_right c pos) (f n)
+  have b : c * f n + f n = (c + 1) * f n := (succ_mul c (f n)).symm
+  exact le_trans a (Nat.le_of_eq b)
