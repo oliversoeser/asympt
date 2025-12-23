@@ -1,6 +1,6 @@
-import Asympt.Basic
+import Asympt.BigO
 
-open List
+open List BigO
 
 @[simp] def toPoly (l : List Nat) : Nat → Nat := λx => match l with
   | nil => 0
