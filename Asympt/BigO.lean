@@ -6,7 +6,7 @@ open Std
 
 namespace BigO
 
--- Big O is a preorder
+-- Big O is a preorder (on Nat → Nat)
 theorem refl (f : Nat → Nat) : bigO f f := by
   exists 1, 0
   intro n h
@@ -27,6 +27,9 @@ instance : LE (Nat → Nat) := ⟨bigO⟩
 instance : IsPreorder (Nat → Nat) where
   le_refl := refl
   le_trans := trans
+
+theorem antisymm {f g : Nat → Nat} (h₁ : bigO f g) (h₂ : bigO g f) : bigTheta f g :=
+  (big_theta_iff f g).mpr ⟨h₁,h₂⟩
 
 -- Basic equations
 
