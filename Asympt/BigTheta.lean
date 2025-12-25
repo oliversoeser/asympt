@@ -11,9 +11,9 @@ theorem symm {f g : Nat → Nat} (h : bigTheta f g) : bigTheta g f := ⟨h.2, h.
 theorem trans {f g h : Nat → Nat} (h₁ : bigTheta f g) (h₂ : bigTheta g h) : bigTheta f h :=
   ⟨BigO.trans f g h h₁.1 h₂.1, BigO.trans h g f h₂.2 h₁.2⟩
 
-instance : Equivalence bigTheta where
-  refl := refl
-  symm := symm
-  trans := trans
+instance equiv : Equivalence bigTheta := ⟨refl, symm, trans⟩
+
+-- Functions (Nat → Nat) are a setoid under Big Theta
+instance setoid : Setoid (Nat → Nat) := ⟨bigTheta, equiv⟩
 
 end BigTheta

@@ -22,4 +22,4 @@ class BigTheta (f : Nat → Nat) (g : outParam (Nat → Nat)) where
 @[reducible] def littleOmega (f g : Nat → Nat) : Prop := littleO g f
 
 -- Basic Theorems
-theorem big_theta_iff (f g : Nat → Nat) : bigTheta f g ↔ bigO f g ∧ bigO g f := ⟨id, id⟩
+theorem big_theta_iff (f g : Nat → Nat) : bigTheta f g ↔ bigO f g ∧ bigOmega f g := ⟨id, id⟩
