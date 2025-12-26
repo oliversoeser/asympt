@@ -1,16 +1,16 @@
-import Asympt.Basic
+import Asympt.Notation
 
 open Std
 
 namespace BigO
 
 -- Big O is a preorder (on Nat → Nat)
-theorem refl (f : Nat → Nat) : bigO f f := by
+theorem refl (f : Nat → Nat) : f=O(f) := by
   exists 1, 0
   intro n h
   simp
 
-theorem trans (f g h : Nat → Nat) (h₁ : bigO f g) (h₂ : bigO g h) : bigO f h := by
+theorem trans (f g h : Nat → Nat) (h₁ : f=O(g)) (h₂ : g=O(h)) : f=O(h) := by
   obtain ⟨c₁,n₁,hle₁⟩ := h₁
   obtain ⟨c₂,n₂,hle₂⟩ := h₂
   exists c₁ * c₂, max n₁ n₂
