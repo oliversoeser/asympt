@@ -2,6 +2,8 @@ import Asympt.BigO
 
 namespace BigTheta
 
+instance has_equiv : HasEquiv (Nat → Nat) := ⟨bigTheta⟩
+
 theorem big_theta_iff (f g : Nat → Nat) : f=Θ(g) ↔ f=O(g) ∧ f=Ω(g) := ⟨id, id⟩
 
 -- Big Theta is an equivalence relation
@@ -15,7 +17,13 @@ theorem trans {f g h : Nat → Nat} (h₁ : f=Θ(g)) (h₂ : g=Θ(h)) : f=Θ(h) 
 
 instance equiv : Equivalence bigTheta := ⟨refl, symm, trans⟩
 
+theorem to_big_o {f g : Nat → Nat} (h : f=Θ(g)) : f=O(g) := h.1
+
+instance : Subrelation bigTheta bigO := to_big_o
+
 -- Functions (Nat → Nat) are a setoid under Big Theta
 instance setoid : Setoid (Nat → Nat) := ⟨bigTheta, equiv⟩
+
+instance quot_linear : Quotient setoid := Quotient.mk' id
 
 end BigTheta

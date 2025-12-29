@@ -45,14 +45,18 @@ theorem little_o_iff (f g : Nat → Nat) : f=o(g) ↔ f=O(g) ∧ g≠O(f) := by
     apply And.intro
     · exact big_o_of_little_o h
     · intro h'
-      -- f = o(g)
-      -- g = O(f)
-      -- show a contradiction
-      have ⟨c,n₁,h'⟩ := h'
-      have ⟨n₂,h⟩ := h (c+1) (by simp) 1 Nat.one_pos
-      simp at h
-      sorry
+      have ⟨c,n₂,h'⟩ := h'
+      have ⟨n₁,h⟩ := h (c+1) (by simp) 1 Nat.one_pos
+      let n := max n₁ n₂
+      have h := h n (max_le_iff.mp (le_refl n)).1
+      grind
   · intro ⟨h₁,h₂⟩
+    intro c₁ hc₁ c₂ hc₂
+    have ⟨c,n₀,h₁⟩ := h₁
+    exists n₀
+    intro n hn
+    unfold bigO at h₂
+    simp at h₂
     sorry
 
 instance lt : LT (Nat → Nat) := ⟨littleO⟩
