@@ -39,28 +39,7 @@ theorem big_o_of_little_o {f g : Nat → Nat} (h : f=o(g)) : f=O(g) := by
   simp_all
   exact le_of_lt (h n hn)
 
-theorem little_o_iff (f g : Nat → Nat) : f=o(g) ↔ f=O(g) ∧ g≠O(f) := by
-  apply Iff.intro
-  · intro h
-    apply And.intro
-    · exact big_o_of_little_o h
-    · intro h'
-      have ⟨c,n₂,h'⟩ := h'
-      have ⟨n₁,h⟩ := h (c+1) (by simp) 1 Nat.one_pos
-      let n := max n₁ n₂
-      have h := h n (max_le_iff.mp (le_refl n)).1
-      grind
-  · intro ⟨h₁,h₂⟩
-    intro c₁ hc₁ c₂ hc₂
-    have ⟨c,n₀,h₁⟩ := h₁
-    exists n₀
-    intro n hn
-    unfold bigO at h₂
-    simp at h₂
-    sorry
-
+-- Note that littleO is not lawful with respect to bigO since f=O(g) and g≠O(f) do not imply f=o(g)
 instance lt : LT (Nat → Nat) := ⟨littleO⟩
-
-instance lawful_lt : LawfulOrderLT (Nat → Nat) := ⟨little_o_iff⟩
 
 end LittleO
