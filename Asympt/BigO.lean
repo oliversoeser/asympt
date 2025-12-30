@@ -11,7 +11,7 @@ theorem refl (f : Nat → Nat) : f=O(f) := by
   intro n h
   simp
 
-theorem trans (f g h : Nat → Nat) (h₁ : f=O(g)) (h₂ : g=O(h)) : f=O(h) := by
+theorem trans {f g h : Nat → Nat} (h₁ : f=O(g)) (h₂ : g=O(h)) : f=O(h) := by
   obtain ⟨c₁,n₁,hle₁⟩ := h₁
   obtain ⟨c₂,n₂,hle₂⟩ := h₂
   exists c₁ * c₂, max n₁ n₂
@@ -23,8 +23,11 @@ theorem trans (f g h : Nat → Nat) (h₁ : f=O(g)) (h₂ : g=O(h)) : f=O(h) := 
 
 instance le : LE (Nat → Nat) := ⟨bigO⟩
 
+instance : Refl bigO := ⟨refl⟩
+instance : Trans bigO bigO bigO := ⟨trans⟩
+
 instance preorder : IsPreorder (Nat → Nat) where
   le_refl := refl
-  le_trans := trans
+  le_trans := @trans
 
 end BigO
