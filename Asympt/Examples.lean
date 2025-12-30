@@ -2,7 +2,6 @@ import Asympt.Basic
 
 open Nat
 
--- From first principles
 theorem ex_1 : bigO (λn => 5 * n ^ 3 + 100) (λn => n ^ 3) := by
   exists 6, 10
   intro n h

@@ -4,7 +4,8 @@ open Std
 
 namespace BigO
 
--- Big O is a preorder (on Nat → Nat)
+/-! # preorder -/
+
 theorem refl (f : Nat → Nat) : f=O(f) := by
   exists 1, 0
   intro n h
