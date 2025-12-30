@@ -39,7 +39,4 @@ theorem big_o_of_little_o {f g : Nat → Nat} (h : f=o(g)) : f=O(g) := by
   simp_all
   exact le_of_lt (h n hn)
 
--- Note that littleO is not lawful with respect to bigO since f=O(g) and g≠O(f) do not imply f=o(g)
-instance lt : LT (Nat → Nat) := ⟨littleO⟩
-
 end LittleO
