@@ -2,6 +2,11 @@ name = "asympt"
 version = "0.1.0"
 defaultTargets = ["asympt"]
 
+[[require]]
+name = "batteries"
+git = "https://github.com/leanprover-community/batteries"
+rev = "main"
+
 [[lean_lib]]
 name = "Asympt"
 
