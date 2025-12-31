@@ -25,8 +25,4 @@ instance equiv : Equivalence bigTheta := ⟨refl, symm, trans⟩
 
 def Quot : Type := Quotient ⟨bigTheta, equiv⟩
 
-/-! # equivalence class algebra -/
-
--- TODO
-
 end BigTheta
