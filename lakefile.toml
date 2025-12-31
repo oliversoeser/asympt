@@ -2,6 +2,16 @@ name = "asympt"
 version = "0.1.0"
 defaultTargets = ["asympt"]
 
+[[require]]
+scope = "leanprover"
+name = "doc-gen4"
+rev = "main"
+
+[[require]]
+scope = "leanprover-community"
+name = "importGraph"
+rev = "main"
+
 [[lean_lib]]
 name = "Asympt"
 
