@@ -30,4 +30,8 @@ instance preorder : IsPreorder (Nat → Nat) where
   le_refl := refl
   le_trans := @trans
 
+/-! # algebra -/
+
+
+
 end BigO

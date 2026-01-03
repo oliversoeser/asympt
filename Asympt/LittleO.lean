@@ -47,4 +47,6 @@ instance : Irrefl littleO := ⟨irrefl⟩
 instance : Asymm littleO := ⟨asymm⟩
 instance : Trans littleO littleO littleO := ⟨trans⟩
 
+instance : LT (Nat → Nat) := ⟨littleO⟩
+
 end LittleO

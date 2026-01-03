@@ -23,6 +23,32 @@ instance : Trans bigTheta bigTheta bigTheta := ⟨trans⟩
 
 instance equiv : Equivalence bigTheta := ⟨refl, symm, trans⟩
 
-def Quot : Type := Quotient ⟨bigTheta, equiv⟩
+instance : Setoid (Nat → Nat) := ⟨bigTheta, equiv⟩
+
+/--
+The type of equivalence classes of functions `Nat → Nat` under Big Θ.
+-/
+def FunC : Type := Quotient ⟨bigTheta, equiv⟩
+
+/-! # equivalence class algebra -/
+
+instance : Zero FunC := ⟨.mk' (λ_ => 0)⟩
+
+instance : One FunC := ⟨.mk' (λ_ => 1)⟩
+
+def add (f g : Nat → Nat) : Nat → Nat := λ n => f n + g n
+
+def add_theta {f₁ g₁ f₂ g₂ : Nat → Nat} (hf : f₁=Θ(f₂)) (hg : g₁=Θ(g₂)) : (add f₁ g₁)=Θ(add f₂ g₂) := by
+  unfold bigTheta
+  apply And.intro
+  · sorry
+  · sorry
+
+def addC (f g : Nat → Nat) : FunC := .mk' (add f g)
+
+theorem addC_theta (f₁ g₁ f₂ g₂ : Nat → Nat) (hf : f₁=Θ(f₂)) (hg : g₁=Θ(g₂)) : addC f₁ g₁ = addC f₂ g₂ :=
+  Quotient.sound (add_theta hf hg)
+
+instance : Add FunC := ⟨λ f g => Quotient.lift₂ addC addC_theta f g⟩
 
 end BigTheta

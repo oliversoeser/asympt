@@ -1,5 +1,7 @@
 import Asympt.Basic
 
+/-! # asymptotic syntax -/
+
 syntax term "=O(" term ")" : term
 syntax term "=o(" term ")" : term
 syntax term "=Ω(" term ")" : term
