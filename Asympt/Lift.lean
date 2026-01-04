@@ -38,10 +38,10 @@ instance comm_semiring_fun : CommSemiring (A → B) where
 
 instance : IntCast (A → B) where intCast x := λ_ => r.intCast.intCast x
 instance : SMul Int (A → B) where smul x f := λa => x • (f a)
+instance : Neg (A → B) where neg f := λa => -(f a)
+instance : Sub (A → B) where sub f g := λa => (f a) - (g a)
 
 instance ring_fun : Ring (A → B) where
-  neg := sorry
-  sub := sorry
   neg_add_cancel := sorry
   sub_eq_add_neg := sorry
   neg_zsmul := sorry
@@ -52,10 +52,10 @@ instance ring_fun : Ring (A → B) where
 instance comm_ring_fun : CommRing (A → B) where
 
 instance : HPow (A → B) Int (A → B) where hPow f x := λa => (f a) ^ x
+instance : Inv (A → B) where inv f := λa => (f a)⁻¹
+instance : Div (A → B) where div f g := λa => (f a) / (g a)
 
 instance field_fun : Field (A → B) where
-  inv := sorry
-  div := sorry
   div_eq_mul_inv := sorry
   zero_ne_one := sorry
   inv_zero := sorry
