@@ -41,12 +41,12 @@ instance [Ring B] : Neg (A → B) where neg f := λa => -(f a)
 instance [Ring B] : Sub (A → B) where sub f g := λa => (f a) - (g a)
 
 instance ring_fun [r : Ring B] : Ring (A → B) where
-  neg_add_cancel f := sorry
-  sub_eq_add_neg f g := sorry
-  neg_zsmul i f := sorry
-  zsmul_natCast_eq_nsmul n f := sorry
-  intCast_ofNat n := sorry
-  intCast_neg i := sorry
+  neg_add_cancel := by intros; funext; exact r.neg_add_cancel _
+  sub_eq_add_neg := by intros; funext; exact r.sub_eq_add_neg _ _
+  neg_zsmul := by intros; funext; exact r.neg_zsmul _ _
+  zsmul_natCast_eq_nsmul := by intros; funext; exact r.zsmul_natCast_eq_nsmul _ _
+  intCast_ofNat := by intros; funext; exact r.intCast_ofNat _
+  intCast_neg := by intros; funext; exact r.intCast_neg _
 
 instance comm_ring_fun [cr : CommRing B] : CommRing (A → B) where
 
@@ -55,10 +55,14 @@ instance [Field B] : Inv (A → B) where inv f := λa => (f a)⁻¹
 instance [Field B] : Div (A → B) where div f g := λa => (f a) / (g a)
 
 instance field_fun [fld : Field B] : Field (A → B) where
-  div_eq_mul_inv := sorry
-  zero_ne_one := sorry
-  inv_zero := sorry
-  mul_inv_cancel := sorry
-  zpow_zero := sorry
-  zpow_succ := sorry
-  zpow_neg := sorry
+  div_eq_mul_inv := by intros; funext; exact fld.div_eq_mul_inv _ _
+  zero_ne_one := by
+    intro h
+    sorry
+  inv_zero := by intros; funext; exact fld.inv_zero
+  mul_inv_cancel := by
+    intro h
+    sorry
+  zpow_zero := by intros; funext; exact fld.zpow_zero _
+  zpow_succ := by intros; funext; exact fld.zpow_succ _ _
+  zpow_neg := by intros; funext; exact fld.zpow_neg _ _
