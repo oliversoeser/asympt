@@ -8,10 +8,10 @@ universe u v
 variable {A : Type u} {B : Type v} [sr : Semiring B] [csr : CommSemiring B]
   [r : Ring B] [cr : CommRing B] [fld : Field B]
 
-instance : Add (A → B) where add f g := λx => (f x) + (g x)
-instance : Mul (A → B) where mul f g := λx => (f x) * (g x)
-instance : SMul Nat (A → B) where smul n f := λx => n • (f x)
-instance : HPow (A → B) Nat (A → B) where hPow f n := λx => (f x) ^ n
+instance : Add (A → B) where add f g := λa => (f a) + (g a)
+instance : Mul (A → B) where mul f g := λa => (f a) * (g a)
+instance : SMul Nat (A → B) where smul n f := λa => n • (f a)
+instance : HPow (A → B) Nat (A → B) where hPow f n := λa => (f a) ^ n
 
 instance : NatCast (A → B) where natCast n := λ_ => sr.natCast.natCast n
 instance {n : Nat} : OfNat (A → B) n where ofNat := λ_ => (sr.ofNat n).ofNat
@@ -36,8 +36,8 @@ instance semiring_fun : Semiring (A → B) where
 instance comm_semiring_fun : CommSemiring (A → B) where
   mul_comm f g := sorry
 
-instance : IntCast (A → B) := sorry
-instance : SMul Int (A → B) := sorry
+instance : IntCast (A → B) where intCast x := λ_ => r.intCast.intCast x
+instance : SMul Int (A → B) where smul x f := λa => x • (f a)
 
 instance ring_fun : Ring (A → B) where
   neg := sorry
@@ -51,7 +51,7 @@ instance ring_fun : Ring (A → B) where
 
 instance comm_ring_fun : CommRing (A → B) where
 
-instance : HPow (A → B) Int (A → B) := sorry
+instance : HPow (A → B) Int (A → B) where hPow f x := λa => (f a) ^ x
 
 instance field_fun : Field (A → B) where
   inv := sorry
