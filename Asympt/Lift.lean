@@ -2,7 +2,7 @@ namespace Lift
 
 open Lean.Grind
 
-/-! # function algebra lifting -/
+/-! # function algebra -/
 
 universe u v
 variable {A : Type u} {B : Type v}
@@ -50,19 +50,4 @@ instance ring_fun [r : Ring B] : Ring (A → B) where
 
 instance comm_ring_fun [cr : CommRing B] : CommRing (A → B) where
 
-instance [Field B] : HPow (A → B) Int (A → B) where hPow f i := λa => (f a) ^ i
-instance [Field B] : Inv (A → B) where inv f := λa => (f a)⁻¹
-instance [Field B] : Div (A → B) where div f g := λa => (f a) / (g a)
-
-instance field_fun [fld : Field B] : Field (A → B) where
-  div_eq_mul_inv := by intros; funext; exact fld.div_eq_mul_inv _ _
-  zero_ne_one := by
-    intro h
-    sorry
-  inv_zero := by intros; funext; exact fld.inv_zero
-  mul_inv_cancel := by
-    intro h
-    sorry
-  zpow_zero := by intros; funext; exact fld.zpow_zero _
-  zpow_succ := by intros; funext; exact fld.zpow_succ _ _
-  zpow_neg := by intros; funext; exact fld.zpow_neg _ _
+/-! # ordered function algebra -/
