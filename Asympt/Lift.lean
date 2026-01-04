@@ -2,12 +2,11 @@ namespace Lift
 
 open Lean.Grind
 
-/-! # semiring-valued function lifting -/
-
-section Semiring
+/-! # function algebra lifting -/
 
 universe u v
-variable {A : Type u} {B : Type v} [sr : Semiring B]
+variable {A : Type u} {B : Type v} [sr : Semiring B] [csr : CommSemiring B]
+  [r : Ring B] [cr : CommRing B] [fld : Field B]
 
 instance : Add (A → B) where add f g := λx => (f x) + (g x)
 instance : Mul (A → B) where mul f g := λx => (f x) * (g x)
@@ -17,7 +16,7 @@ instance : HPow (A → B) Nat (A → B) where hPow f n := λx => (f x) ^ n
 instance : NatCast (A → B) where natCast n := λ_ => sr.natCast.natCast n
 instance {n : Nat} : OfNat (A → B) n where ofNat := λ_ => (sr.ofNat n).ofNat
 
-instance lift_semiring_fun : Semiring (A → B) where
+instance semiring_fun : Semiring (A → B) where
   add_zero := by intro; funext; exact sr.add_zero _
   add_comm := by intros; funext; exact sr.add_comm _ _
   add_assoc := by intros; funext; exact sr.add_assoc _ _ _
@@ -34,5 +33,33 @@ instance lift_semiring_fun : Semiring (A → B) where
   ofNat_eq_natCast := by intros; funext; exact sr.ofNat_eq_natCast _
   nsmul_eq_natCast_mul := by intros; funext; exact sr.nsmul_eq_natCast_mul _ _
 
+instance comm_semiring_fun : CommSemiring (A → B) where
+  mul_comm f g := sorry
 
-end Semiring
+instance : IntCast (A → B) := sorry
+instance : SMul Int (A → B) := sorry
+
+instance ring_fun : Ring (A → B) where
+  neg := sorry
+  sub := sorry
+  neg_add_cancel := sorry
+  sub_eq_add_neg := sorry
+  neg_zsmul := sorry
+  zsmul_natCast_eq_nsmul := sorry
+  intCast_ofNat := sorry
+  intCast_neg := sorry
+
+instance comm_ring_fun : CommRing (A → B) where
+
+instance : HPow (A → B) Int (A → B) := sorry
+
+instance field_fun : Field (A → B) where
+  inv := sorry
+  div := sorry
+  div_eq_mul_inv := sorry
+  zero_ne_one := sorry
+  inv_zero := sorry
+  mul_inv_cancel := sorry
+  zpow_zero := sorry
+  zpow_succ := sorry
+  zpow_neg := sorry
