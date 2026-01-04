@@ -5,18 +5,17 @@ open Lean.Grind
 /-! # function algebra lifting -/
 
 universe u v
-variable {A : Type u} {B : Type v} [sr : Semiring B] [csr : CommSemiring B]
-  [r : Ring B] [cr : CommRing B] [fld : Field B]
+variable {A : Type u} {B : Type v}
 
-instance : Add (A → B) where add f g := λa => (f a) + (g a)
-instance : Mul (A → B) where mul f g := λa => (f a) * (g a)
-instance : SMul Nat (A → B) where smul n f := λa => n • (f a)
-instance : HPow (A → B) Nat (A → B) where hPow f n := λa => (f a) ^ n
+instance [Semiring B] : Add (A → B) where add f g := λa => (f a) + (g a)
+instance [Semiring B] : Mul (A → B) where mul f g := λa => (f a) * (g a)
+instance [Semiring B] : SMul Nat (A → B) where smul n f := λa => n • (f a)
+instance [Semiring B] : HPow (A → B) Nat (A → B) where hPow f n := λa => (f a) ^ n
 
-instance : NatCast (A → B) where natCast n := λ_ => sr.natCast.natCast n
-instance {n : Nat} : OfNat (A → B) n where ofNat := λ_ => (sr.ofNat n).ofNat
+instance [sr : Semiring B] : NatCast (A → B) where natCast n := λ_ => sr.natCast.natCast n
+instance {n : Nat} [sr : Semiring B] : OfNat (A → B) n where ofNat := λ_ => (sr.ofNat n).ofNat
 
-instance semiring_fun : Semiring (A → B) where
+instance semiring_fun [sr : Semiring B] : Semiring (A → B) where
   add_zero := by intro; funext; exact sr.add_zero _
   add_comm := by intros; funext; exact sr.add_comm _ _
   add_assoc := by intros; funext; exact sr.add_assoc _ _ _
@@ -33,29 +32,29 @@ instance semiring_fun : Semiring (A → B) where
   ofNat_eq_natCast := by intros; funext; exact sr.ofNat_eq_natCast _
   nsmul_eq_natCast_mul := by intros; funext; exact sr.nsmul_eq_natCast_mul _ _
 
-instance comm_semiring_fun : CommSemiring (A → B) where
-  mul_comm f g := sorry
+instance comm_semiring_fun [csr : CommSemiring B] : CommSemiring (A → B) where
+  mul_comm := by intros; funext a; exact csr.mul_comm _ _
 
-instance : IntCast (A → B) where intCast x := λ_ => r.intCast.intCast x
-instance : SMul Int (A → B) where smul x f := λa => x • (f a)
-instance : Neg (A → B) where neg f := λa => -(f a)
-instance : Sub (A → B) where sub f g := λa => (f a) - (g a)
+instance [r : Ring B] : IntCast (A → B) where intCast i := λ_ => r.intCast.intCast i
+instance [Ring B] : SMul Int (A → B) where smul i f := λa => i • (f a)
+instance [Ring B] : Neg (A → B) where neg f := λa => -(f a)
+instance [Ring B] : Sub (A → B) where sub f g := λa => (f a) - (g a)
 
-instance ring_fun : Ring (A → B) where
-  neg_add_cancel := sorry
-  sub_eq_add_neg := sorry
-  neg_zsmul := sorry
-  zsmul_natCast_eq_nsmul := sorry
-  intCast_ofNat := sorry
-  intCast_neg := sorry
+instance ring_fun [r : Ring B] : Ring (A → B) where
+  neg_add_cancel f := sorry
+  sub_eq_add_neg f g := sorry
+  neg_zsmul i f := sorry
+  zsmul_natCast_eq_nsmul n f := sorry
+  intCast_ofNat n := sorry
+  intCast_neg i := sorry
 
-instance comm_ring_fun : CommRing (A → B) where
+instance comm_ring_fun [cr : CommRing B] : CommRing (A → B) where
 
-instance : HPow (A → B) Int (A → B) where hPow f x := λa => (f a) ^ x
-instance : Inv (A → B) where inv f := λa => (f a)⁻¹
-instance : Div (A → B) where div f g := λa => (f a) / (g a)
+instance [Field B] : HPow (A → B) Int (A → B) where hPow f i := λa => (f a) ^ i
+instance [Field B] : Inv (A → B) where inv f := λa => (f a)⁻¹
+instance [Field B] : Div (A → B) where div f g := λa => (f a) / (g a)
 
-instance field_fun : Field (A → B) where
+instance field_fun [fld : Field B] : Field (A → B) where
   div_eq_mul_inv := sorry
   zero_ne_one := sorry
   inv_zero := sorry
